@@ -1,28 +1,41 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 function Navbar() {
+  const user = useSelector((store) => store.user);
+  console.log("user>>>>", user);
   return (
-    <div className="navbar bg-base-200 shadow-sm">
+    <div className="navbar bg-base-400 shadow-sm">
       <div className="flex-1">
         <a className="btn btn-ghost text-xl">DevTinder</a>
       </div>
       <div className="flex gap-2">
-        <input
-          type="text"
-          placeholder="Search"
-          className="input input-bordered w-24 md:w-auto"
-        />
+        {user && (
+          <input
+            type="text"
+            placeholder="Search"
+            className="input input-bordered w-24 md:w-auto mx-20"
+          />
+        )}
+
+        {user && user.firstName && (
+          <span className="hidden md:inline-block my-auto">
+            Welcome {user?.firstName}
+          </span>
+        )}
         <div className="dropdown dropdown-end">
           <div
             tabIndex={0}
             role="button"
-            className="btn btn-ghost btn-circle avatar"
+            className="btn btn-ghost btn-circle avatar mx-2"
           >
             <div className="w-10 rounded-full">
-              <img
-                alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-              />
+              {user?.photoUrl && (
+                <img
+                  alt="Tailwind CSS Navbar component"
+                  src={user?.photoUrl || "https://via.placeholder.com/150"}
+                />
+              )}
             </div>
           </div>
           <ul
