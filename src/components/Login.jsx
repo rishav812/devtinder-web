@@ -17,7 +17,7 @@ function Login() {
         {
           email,
           password,
-        },
+        }, 
         { withCredentials: true }
       );
       console.log("response", response);
