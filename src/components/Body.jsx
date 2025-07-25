@@ -16,7 +16,6 @@ function Body() {
         withCredentials: true,
       });
       if (res.status === 200) {
-        console.log("User data fetched successfully:", res.data);
         dispatch(addUsers(res.data));
       }
     } catch (error) {
