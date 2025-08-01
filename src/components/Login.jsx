@@ -6,7 +6,10 @@ import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("vk@gmail.com");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("Test@123");
+  const [isLoginForm, setIsLoginForm] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -17,7 +20,7 @@ function Login() {
         {
           email,
           password,
-        }, 
+        },
         { withCredentials: true }
       );
       console.log("response", response);
@@ -33,12 +36,55 @@ function Login() {
     }
   };
 
+  const handleSignup = async () => {
+    try{
+      const response = await axios.post(
+        "http://localhost:7777/signup",
+        {
+          firstName,
+          lastName,
+          emailId: email,
+          password,
+        },
+        { withCredentials: true }
+      );
+      console.log("Signup response", response);
+      if (response.status === 200) {
+        dispatch(addUsers(response.data.data));
+        navigate("/");
+      } else {
+        alert("Signup failed. Please try again.");
+      }
+    }catch (error) {
+      console.error("Signup failed:", error);
+      alert("Signup failed. Please try again.");
+    }
+  }
+
   return (
     <div className="flex justify-center my-20">
       <div className="card w-96 bg-base-200 card-xs shadow-sm">
         <div className="card-body">
-          <h2 className="card-title">Signin</h2>
+          <h2 className="card-title">{isLoginForm ? "Sign In" : "Sign up"}</h2>
           <div className="justify-end card-actions">
+            {!isLoginForm && (
+              <>
+                <input
+                  type="text"
+                  value={firstName}
+                  placeholder="Enter your First Name"
+                  onChange={(e) => setFirstName(e.target.value)}
+                  className="input input-bordered w-full mb-3 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition duration-200"
+                />
+                <input
+                  type="text"
+                  value={lastName}
+                  placeholder="Enter your Last Name"
+                  onChange={(e) => setLastName(e.target.value)}
+                  className="input input-bordered w-full mb-3 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition duration-200"
+                />
+              </>
+            )}
             <input
               type="text"
               value={email}
@@ -53,9 +99,22 @@ function Login() {
               placeholder="Enter your password"
               className="input input-bordered w-full mb-3 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition duration-200"
             />
-            <button className="btn btn-primary" onClick={handleSubmit}>
-              Login
-            </button>
+            <div className="flex flex-col items-center">
+              <button
+                className="btn btn-primary align-center"
+                onClick={isLoginForm ? handleSubmit: handleSignup}
+              >
+                {isLoginForm ? "Login":"Sign Up"}
+              </button>
+              <p
+                className="mt-4 text-sm justify-content-center text-white-600 cursor-pointer text-center"
+                onClick={() => setIsLoginForm(!isLoginForm)}
+              >
+                {isLoginForm
+                  ? "New User? Sign up here"
+                  : "Existing User? Login here"}
+              </p>
+            </div>
           </div>
         </div>
       </div>

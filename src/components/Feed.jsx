@@ -25,6 +25,13 @@ function Feed() {
   useEffect(() => {
     fetchFeed();
   }, []);
+  if (!feed || feed.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center my-10">
+        No users found in the feed.
+      </div>
+    );
+  }
   return (
     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "80vh" }}>
       <UserCard user={feed[0]}/>

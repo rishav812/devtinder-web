@@ -26,7 +26,7 @@ function Navbar() {
   return (
     <div className="navbar bg-base-400 shadow-sm">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">DevTinder</a>
+        <Link to="/" className="btn btn-ghost text-xl">DevTinder</Link>
       </div>
       <div className="flex gap-2">
         {user && (
