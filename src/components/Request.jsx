@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import axios from "axios";
+import { BASE_URL } from "../constants";
 
 function Request() {
   const [request, setRequest] = React.useState([]);
@@ -7,7 +8,7 @@ function Request() {
   const requestReview = async (status, id, index) => {
     try {
       const res = await axios.post(
-        `http://localhost:7777/request/review/${status}/${id}`,
+        `${BASE_URL}/request/review/${status}/${id}`,
         {},
         { withCredentials: true }
       );
@@ -26,7 +27,7 @@ function Request() {
   const fetchRequest = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:7777/user/request/recieved",
+        `${BASE_URL}/user/request/recieved`,
         {
           withCredentials: true,
         }

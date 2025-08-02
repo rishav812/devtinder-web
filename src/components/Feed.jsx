@@ -5,6 +5,7 @@ import { addUsers } from "../utils/userSlice";
 import { addFeed } from "../utils/feedSlice";
 import { useSelector } from "react-redux";
 import UserCard from "./UserCard";
+import { BASE_URL } from "../constants";
 
 function Feed() {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ function Feed() {
   const fetchFeed = async () => {
     try {
       // if(feed) return;
-      const response= await axios.get("http://localhost:7777/user/feed",{withCredentials: true});
+      const response= await axios.get(`${BASE_URL}/user/feed`,{withCredentials: true});
       if (response.status === 200) {
         console.log("Feed data fetched successfully:", response.data.users);
         dispatch(addFeed(response.data.users));

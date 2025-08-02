@@ -2,6 +2,7 @@ import React, { use } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { updateFeed } from "../utils/feedSlice";
+import { BASE_URL } from "../constants";
 
 function UserCard({ user }) {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ function UserCard({ user }) {
   const handleClick = async (status, id) => {
     try {
       const response = await axios.post(
-        `http://localhost:7777/request/send/${status}/${id}`,
+        `${BASE_URL}/request/send/${status}/${id}`,
         {},
         { withCredentials: true }
       );

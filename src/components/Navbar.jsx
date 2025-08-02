@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { removeUsers } from "../utils/userSlice";
+import { BASE_URL } from "../constants";
 
 
 function Navbar() {
@@ -13,7 +14,7 @@ function Navbar() {
   const handleLogout = async () => {
     try {
       await axios.post(
-        "http://localhost:7777/logout",
+        `${BASE_URL}/logout`,
         {},
         { withCredentials: true }
       );
